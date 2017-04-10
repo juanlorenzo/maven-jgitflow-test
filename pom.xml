@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>uy.com.test</groupId>
+  <artifactId>maven-release-test-parent</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>maven-release-test-parent</name>
+  <url>http://maven.apache.org</url>
+
+  <distributionManagement>
+    <repository>
+      <id>om-releases-upload</id>
+      <name>OM Releases Upload</name>
+      <url>http://oberon:9081/nexus/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>om-snapshots-upload</id>
+      <name>OM Snapshots Upload</name>
+      <url>http://oberon:9081/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <scm>
+    <url>https://github.com/juanlorenzo/maven-release-test</url>
+    <connection>scm:git:https://github.com/juanlorenzo/maven-release-test.git</connection>
+    <developerConnection>scm:git:https://github.com/juanlorenzo/maven-release-test.git</developerConnection>
+    <tag>maven-release-test-parent-1.0.0</tag>
+  </scm>
+
+  <properties>
+    <project.scm.id>github-server</project.scm.id>
+  </properties>
+
+  <dependencyManagement>
+  </dependencyManagement>
+
+  <modules>
+    <module>test-module</module>
+    <module>test-module2</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.5.1</version>
+        </plugin>
+        <plugin>
+            <groupId>external.atlassian.jgitflow</groupId>
+            <artifactId>jgitflow-maven-plugin</artifactId>
+            <version>1.0-m5.1</version>
+            <configuration>
+                <pushFeatures>true</pushFeatures>
+    <!--
+      This allows the CI server (e.g. Jenkins) to automatically push new releases to
+      origin; you can then either manually deploy them or, if you are doing Continuous
+      Deployments, auto-deploy them to prod
+    -->
+    <pushReleases>true</pushReleases>
+    <!--
+      Hot Fixes should be pushed to origin as well so that any dev can pick them up
+    -->
+    <pushHotfixes>true</pushHotfixes>
+    <!--
+      Prevents deployments from dev workstations so that they can be done by a CI
+      server
+    -->
+    <noDeploy>true</noDeploy>
+            </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+  </profiles>
+
+</project>
+
+
